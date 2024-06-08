@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>LED Control</title>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-app.js";
+        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-database.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-analytics.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyD-0SKV5o2Y16oKUZ_2WolC6K62oI3xorw",
+            authDomain: "arduinoledcontrol-38ac5.firebaseapp.com",
+            databaseURL: "https://arduinoledcontrol-38ac5-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "arduinoledcontrol-38ac5",
+            storageBucket: "arduinoledcontrol-38ac5.appspot.com",
+            messagingSenderId: "374558832193",
+            appId: "1:374558832193:web:9daf89edc314f6656f78c0",
+            measurementId: "G-ET91JZVJ4Y"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const database = getDatabase(app);
+
+        // Make setLEDColor available globally
+        window.setLEDColor = function(color, state) {
+            set(ref(database, 'LEDcolor/' + color), state)
+                .then(() => console.log(`Set ${color} LED to ${state}`))
+                .catch((error) => console.error('Error:', error));
+        };
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #000000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: white;
+        }
+        .container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 20px 40px;
+            text-align: center;
+            color: #333;
+        }
+        h1 {
+            margin-top: 20px;
+        }
+        .button-group {
+            margin: 10px 0;
+        }
+        button {
+            border: none;
+            border-radius: 5px;
+            color: white;
+            padding: 10px 20px;
+            margin: 5px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            cursor: pointer;
+        }
+        .red-on { background-color: #f44336; }
+        .red-on:hover { background-color: #d32f2f; }
+        .red-off { background-color: #ef9a9a; }
+        .red-off:hover { background-color: #e57373; }
+        .green-on { background-color: #4CAF50; }
+        .green-on:hover { background-color: #388E3C; }
+        .green-off { background-color: #A5D6A7; }
+        .green-off:hover { background-color: #81C784; }
+        .blue-on { background-color: #2196F3; }
+        .blue-on:hover { background-color: #1976D2; }
+        .blue-off { background-color: #90CAF9; }
+        .blue-off:hover { background-color: #64B5F6; }
+    </style>
+</head>
+<body>
+    <h1>Welcome to LED Control</h1>
+    <div class="container">
+        <h2>Control LEDs</h2>
+        <div class="button-group">
+            <button class="red-on" onclick="setLEDColor('Red', true)">Red On</button>
+            <button class="red-off" onclick="setLEDColor('Red', false)">Red Off</button>
+        </div>
+        <div class="button-group">
+            <button class="green-on" onclick="setLEDColor('Green', true)">Green On</button>
+            <button class="green-off" onclick="setLEDColor('Green', false)">Green Off</button>
+        </div>
+        <div class="button-group">
+            <button class="blue-on" onclick="setLEDColor('Blue', true)">Blue On</button>
+            <button class="blue-off" onclick="setLEDColor('Blue', false)">Blue Off</button>
+        </div>
+    </div>
+</body>
+</html>
